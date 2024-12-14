@@ -7,10 +7,6 @@ class Ustruct
     @content = content.merge( options )
   end
 
-  def debug( keys = false )
-    keys ? @content.keys : @content
-  end
-
   def to_hash
     @content
   end
