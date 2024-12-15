@@ -1,7 +1,5 @@
 # frozen_string_literal: true
 
-require_relative "ustruct/version"
-
 class Ustruct
   def initialize( content = {}, **options )
     @content = content.merge( options )
@@ -22,6 +20,6 @@ class Ustruct
   private
 
   def get( key )
-    @content.fetch( key.to_sym, @content.fetch( key.to_s, nil ) )
+    @content.fetch( key.to_sym, @content.fetch( key.to_s, nil ) ).freeze
   end
 end
