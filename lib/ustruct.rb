@@ -1,6 +1,8 @@
 # frozen_string_literal: true
 
-class Ustruct
+# unmutable but in Ruby there always is a workaround :
+# Ustruct.new( ... ).instance_variable_get( :@content ).merge!( ... )
+class Ustruct < BasicObject
   def initialize( content = {}, **options )
     @content = content.merge( options )
   end
