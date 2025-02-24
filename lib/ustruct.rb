@@ -1,13 +1,10 @@
 # frozen_string_literal: true
-require 'set'
 
 # unmutable but in Ruby there always is a workaround :
 # Ustruct.new( ... ).instance_variable_get( :@content ).merge!( ... )
 class Ustruct < BasicObject
-  PERMITTED_ARGS = Set.new( :unfrozen )
-
   def initialize( content = {}, **options )
-    @content = content.merge( options )
+    @content = duplicate(content).merge( duplicate options )
   end
 
   def to_hash
@@ -15,17 +12,22 @@ class Ustruct < BasicObject
   end
 
   def method_missing( name, *args )
-    Set.new(args).subset?( PERMITTED_ARGS ) ? get( name ) : super
+    args.empty? ? get( name ) : super
   end
 
-  def []( key, *args )
-    get( key, *args )
+  def []( key )
+    get( key )
   end
 
   private
 
-  def get( key, *args )
-    res = @content.fetch( key.to_sym, @content.fetch( key.to_s, nil ) )
-    args.include?(:unfrozen) ? res : res.freeze
+  def duplicate( hash )
+    hash.map do |k,v|
+      [k, v.dup]
+    end.to_h
+  end
+
+  def get( key )
+    @content.fetch( key.to_sym, @content.fetch( key.to_s, nil ) ).dup
   end
 end
