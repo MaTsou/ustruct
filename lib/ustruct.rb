@@ -1,4 +1,5 @@
 # frozen_string_literal: true
+require 'set'
 
 # unmutable but in Ruby there always is a workaround :
 # Ustruct.new( ... ).instance_variable_get( :@content ).merge!( ... )
