@@ -1,5 +1,5 @@
 # frozen_string_literal: true
 
-class Ustruct
-  VERSION = "0.4.0"
+class Ustruct < BasicObject
+  VERSION = '0.5.0'
 end
